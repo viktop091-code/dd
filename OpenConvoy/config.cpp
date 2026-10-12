@@ -28,7 +28,7 @@ class CfgMods
         dir = "OpenConvoy";
         name = "Open Convoy";
         author = "Open Convoy contributors";
-        version = "0.1.1";
+        version = "0.1.2";
         type = "mod";
         dependencies[] = {"Game", "World", "Mission"};
 

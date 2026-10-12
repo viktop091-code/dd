@@ -4,7 +4,7 @@ Open Convoy is an original DayZ server mod for configurable moving vehicle event
 
 ## Current prototype
 
-Version `0.1.1` provides:
+Version `0.1.2` provides:
 
 - server-side JSON settings under `$profile:OpenConvoy/settings.json`;
 - one or more vehicles per convoy;

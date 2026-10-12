@@ -76,17 +76,17 @@ class OC_ConvoyCar: Hatchback_02
             OC_Manager.GetInstance().OnVehicleAttacked(this);
     }
 
-    override void OnInput(float timeSlice)
+    override void OnInput(float dt)
     {
-        super.OnInput(timeSlice);
+        super.OnInput(dt);
 
         if (!GetGame().IsServer() || !m_OC_RouteActive)
             return;
 
-        OC_UpdateAutopilot(timeSlice);
+        OC_UpdateAutopilot();
     }
 
-    protected void OC_UpdateAutopilot(float timeSlice)
+    protected void OC_UpdateAutopilot()
     {
         if (m_OC_WaypointIndex >= m_OC_Waypoints.Count())
         {

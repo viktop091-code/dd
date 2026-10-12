@@ -7,4 +7,4 @@ tooltip = "Open Convoy";
 overview = "Configurable moving convoy events for DayZ servers.";
 action = "";
 author = "Open Convoy contributors";
-version = "0.1.1";
+version = "0.1.2";
