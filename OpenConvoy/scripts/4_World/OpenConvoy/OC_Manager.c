@@ -30,7 +30,7 @@ class OC_Manager
         m_Settings = OC_SettingsRepository.Load();
         if (!m_Settings || !m_Settings.Enabled)
         {
-            Print("[OpenConvoy] Event is disabled in settings.json.");
+            Print("[Wild-Fields] Event is disabled in settings.json.");
             return;
         }
 
@@ -40,7 +40,7 @@ class OC_Manager
         m_Running = true;
         GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(SpawnConvoy, m_Settings.StartupDelaySeconds * 1000, false);
         GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(PollConvoy, 1000, true);
-        Print("[OpenConvoy] Manager started.");
+        Print("[Wild-Fields] Manager started.");
     }
 
     void Stop()
@@ -61,7 +61,7 @@ class OC_Manager
         array<vector> points = OC_ParseRoute(route);
         if (!points || points.Count() < 2)
         {
-            Error("[OpenConvoy] Route " + route.Name + " has fewer than two valid waypoints.");
+            Error("[Wild-Fields] Route " + route.Name + " has fewer than two valid waypoints.");
             OC_ScheduleRespawn();
             return;
         }
@@ -73,7 +73,7 @@ class OC_Manager
         vector orientation = forward.VectorToAngles();
 
         if (m_Settings.SpawnAICrew && !m_Crew.Initialize())
-            Error("[OpenConvoy] Convoy will continue without AI crew.");
+            Error("[Wild-Fields] Convoy will continue without AI crew.");
 
         foreach (OC_VehicleConfig vehicleConfig : m_Settings.Vehicles)
         {
@@ -84,7 +84,7 @@ class OC_Manager
             OC_ConvoyCar vehicle = OC_ConvoyCar.Cast(spawned);
             if (!vehicle)
             {
-                Error("[OpenConvoy] " + vehicleConfig.ClassName + " is not derived from OC_ConvoyCar.");
+                Error("[Wild-Fields] " + vehicleConfig.ClassName + " is not derived from OC_ConvoyCar.");
                 if (spawned)
                     GetGame().ObjectDelete(spawned);
                 continue;
@@ -101,13 +101,39 @@ class OC_Manager
 
         if (m_Vehicles.Count() == 0)
         {
-            Error("[OpenConvoy] No convoy vehicles could be spawned.");
+            Error("[Wild-Fields] No convoy vehicles could be spawned.");
             m_Crew.Cleanup();
             OC_ScheduleRespawn();
             return;
         }
 
-        Print("[OpenConvoy] Spawned route " + route.Name + " with " + m_Vehicles.Count() + " vehicles.");
+        Print("[Wild-Fields] Spawned route " + route.Name + " with " + m_Vehicles.Count() + " vehicles; waiting for AI crew to board.");
+
+        if (m_Settings.SpawnAICrew)
+        {
+            foreach (OC_ConvoyCar crewVehicle : m_Vehicles)
+            {
+                if (crewVehicle)
+                    crewVehicle.OC_PrimeEngine();
+            }
+            m_Crew.BeginSeating();
+        }
+        else
+            OnCrewReady();
+    }
+
+    void OnCrewReady()
+    {
+        if (!m_Running || m_Vehicles.Count() == 0)
+            return;
+
+        foreach (OC_ConvoyCar vehicle : m_Vehicles)
+        {
+            if (vehicle && vehicle.IsAlive())
+                vehicle.OC_StartRoute();
+        }
+
+        Print("[Wild-Fields] Crew seating complete; convoy started.");
     }
 
     void PollConvoy()
@@ -145,7 +171,7 @@ class OC_Manager
         }
 
         m_Crew.DismountAll();
-        Print("[OpenConvoy] Convoy attacked; crew dismounting.");
+        Print("[Wild-Fields] Convoy attacked; crew dismounting.");
     }
 
     void CleanupConvoy()
@@ -170,13 +196,13 @@ class OC_Manager
     {
         if (m_Settings.Routes.Count() == 0)
         {
-            Error("[OpenConvoy] No routes are configured.");
+            Error("[Wild-Fields] No routes are configured.");
             return false;
         }
 
         if (m_Settings.Vehicles.Count() == 0)
         {
-            Error("[OpenConvoy] No vehicles are configured.");
+            Error("[Wild-Fields] No vehicles are configured.");
             return false;
         }
 

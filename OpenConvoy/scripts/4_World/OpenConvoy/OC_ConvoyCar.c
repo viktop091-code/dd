@@ -47,9 +47,25 @@ class OC_ConvoyCar: Hatchback_02
         m_OC_TargetSpeedKmh = Math.Max(targetSpeedKmh, 5.0);
         m_OC_WaypointRadius = Math.Max(waypointRadius, 2.0);
         m_OC_RouteComplete = false;
-        m_OC_RouteActive = m_OC_Waypoints.Count() >= 2;
+        m_OC_RouteActive = false;
 
         SetBrakesActivateWithoutDriver(false);
+    }
+
+    void OC_StartRoute()
+    {
+        if (m_OC_Waypoints.Count() >= 2 && !m_OC_RouteComplete)
+            m_OC_RouteActive = true;
+    }
+
+    void OC_PrimeEngine()
+    {
+        if (!GetGame().IsServer() || EngineIsOn())
+            return;
+
+        dBodyActive(this, ActiveState.ACTIVE);
+        DisableSimulation(false);
+        EngineStart();
     }
 
     bool OC_IsRouteComplete()
@@ -127,7 +143,7 @@ class OC_ConvoyCar: Hatchback_02
             {
                 if (!m_OC_EngineFailureLogged)
                 {
-                    Error("[OpenConvoy] Vehicle cannot start; operational state " + operationalState + ".");
+                    Error("[Wild-Fields] Vehicle cannot start; operational state " + operationalState + ".");
                     m_OC_EngineFailureLogged = true;
                 }
                 SetBrake(1.0);
@@ -140,7 +156,7 @@ class OC_ConvoyCar: Hatchback_02
 
         if (!m_OC_DriveStartedLogged)
         {
-            Print("[OpenConvoy] Autopilot active for " + GetType() + ".");
+            Print("[Wild-Fields] Autopilot active for " + GetType() + ".");
             m_OC_DriveStartedLogged = true;
         }
 

@@ -1,10 +1,10 @@
-name = "Open Convoy";
+name = "Wild-Fields";
 picture = "";
 logo = "";
 logoSmall = "";
 logoOver = "";
-tooltip = "Open Convoy";
-overview = "Configurable moving convoy events for DayZ servers.";
+tooltip = "Wild-Fields";
+overview = "Wild-Fields moving convoy events for DayZ servers.";
 action = "";
-author = "Open Convoy contributors";
-version = "0.1.2";
+author = "Wild-Fields";
+version = "0.1.3";

@@ -16,8 +16,8 @@ class CfgVehicles
     class OC_ConvoyCar: Hatchback_02
     {
         scope = 2;
-        displayName = "Open Convoy Vehicle";
-        descriptionShort = "Server-controlled convoy vehicle";
+        displayName = "Wild-Fields Convoy Vehicle";
+        descriptionShort = "Wild-Fields server-controlled convoy vehicle";
     };
 };
 
@@ -26,9 +26,9 @@ class CfgMods
     class OpenConvoy
     {
         dir = "OpenConvoy";
-        name = "Open Convoy";
-        author = "Open Convoy contributors";
-        version = "0.1.2";
+        name = "Wild-Fields";
+        author = "Wild-Fields";
+        version = "0.1.3";
         type = "mod";
         dependencies[] = {"Game", "World", "Mission"};
 

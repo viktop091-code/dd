@@ -34,6 +34,7 @@ class OC_Settings
     bool SpawnAICrew = true;
     int CrewPerVehicle = 2;
     bool DismountCrewWhenAttacked = true;
+    string AILoadout = "BanditLoadout";
     ref array<string> AICharacterClasses;
     ref array<string> AILoadoutItems;
     ref array<ref OC_VehicleConfig> Vehicles;
@@ -63,16 +64,19 @@ class OC_SettingsRepository
         {
             settings = CreateDefaults();
             Save(settings);
-            Print("[OpenConvoy] Created " + FILE_PATH + ". Set Enabled to true after editing the sample route.");
+            Print("[Wild-Fields] Created " + FILE_PATH + ". Set Enabled to true after editing the sample route.");
             return settings;
         }
 
         string error;
         if (!JsonFileLoader<OC_Settings>.LoadFile(FILE_PATH, settings, error))
         {
-            Error("[OpenConvoy] Cannot load settings: " + error);
+            Error("[Wild-Fields] Cannot load settings: " + error);
             return null;
         }
+
+        if (settings.AILoadout == "")
+            settings.AILoadout = "BanditLoadout";
 
         return settings;
     }
@@ -81,7 +85,7 @@ class OC_SettingsRepository
     {
         string error;
         if (!JsonFileLoader<OC_Settings>.SaveFile(FILE_PATH, settings, error))
-            Error("[OpenConvoy] Cannot save settings: " + error);
+            Error("[Wild-Fields] Cannot save settings: " + error);
     }
 
     static OC_Settings CreateDefaults()

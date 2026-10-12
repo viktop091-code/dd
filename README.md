@@ -1,40 +1,32 @@
-# Open Convoy
+# Wild-Fields
 
-Open Convoy is an original DayZ server mod for configurable moving vehicle events. It does not contain code, routes, layouts, names, or assets from Triumph Moving AI Convoy.
+Wild-Fields is a DayZ server mod for configurable moving vehicle convoys with Expansion AI crews.
 
-## Current prototype
+## Version 0.1.3
 
-Version `0.1.2` provides:
+- complete convoy vehicles with wheels, doors, battery, radiator, spark plug, and fluids;
+- Expansion AI loadouts through `ExpansionHumanLoadout` (default: `BanditLoadout`);
+- delayed, retried AI seating before the convoy starts moving;
+- automatic removal of an AI unit that cannot enter its assigned seat within 45 seconds;
+- waypoint driving, manual gear changes, cleanup, and respawn;
+- convoy halt and crew dismount after a player attack.
 
-- server-side JSON settings under `$profile:OpenConvoy/settings.json`;
-- one or more vehicles per convoy;
-- waypoint following with throttle, steering, braking, and manual gear changes;
-- Expansion AI mercenary crews with a configurable basic loadout;
-- convoy halt and AI dismount when a vehicle is attacked;
-- complete vehicle assembly and deferred Expansion AI seating;
-- cleanup at the end of a route and scheduled respawning;
-- an example configuration generated on first server start.
+The existing settings location remains `$profile:OpenConvoy/settings.json` so servers upgrading from an earlier build keep their routes. Add this field to an existing settings file if it is missing:
 
-The generated configuration starts with `Enabled: false`. It contains a first-pass ChernarusPlus route along the south coast. Verify and adjust the points for your server, then enable it. Loot presets, notifications, and an admin UI are planned after the driving controller and Expansion AI seating have been tested on a DayZ server.
+```json
+"AILoadout": "BanditLoadout"
+```
 
-A reviewable copy of the generated configuration is available at `examples/settings.json`.
+The generated example starts with `Enabled: false`. Verify the route coordinates, set it to `true`, and restart the server.
 
-## Source layout
+## Installation
 
-- `OpenConvoy/config.cpp` — addon and vehicle registration;
-- `OpenConvoy/scripts/3_Game` — serializable configuration;
-- `OpenConvoy/scripts/4_World` — vehicle controller and event manager;
-- `OpenConvoy/scripts/5_Mission` — dedicated-server startup hook.
+1. Install CF, DayZ Expansion Core, and DayZ Expansion AI on the server and clients.
+2. Copy `@Wild-Fields` to the server and client mod directories.
+3. Add `@Wild-Fields` to the server `-mod` list after the dependencies.
+4. Start the server once, edit `$profile:OpenConvoy/settings.json`, enable the event, and restart.
+5. Check the script log for `[Wild-Fields]` messages.
 
-## Build and test
+The included PBO is unsigned. Servers using signature verification must sign it with their own private key and distribute the matching `.bikey` and `.bisign` files.
 
-1. Install DayZ Expansion Core and DayZ Expansion AI on the server.
-2. Pack the `OpenConvoy` directory as `OpenConvoy.pbo` with DayZ Tools Addon Builder. Use `OpenConvoy` as the PBO prefix.
-3. Place the PBO in `@OpenConvoy/Addons/` and copy `mod.cpp` to `@OpenConvoy/`.
-4. Start a dedicated server with CF, Expansion Core, Expansion AI, and `@OpenConvoy` in `-mod`. The custom vehicle class is networked, so clients must load the same mod. Stop the server after `settings.json` is generated.
-5. Verify the route coordinates, set `Enabled` to `true`, and restart the server.
-6. Check the script log for `[OpenConvoy]` and observe the route. Tune waypoint spacing, radius, and target speed before adding gameplay systems.
-
-There is no DayZ runtime or Addon Builder in this repository, so the final compile and physics test must be done on a machine with DayZ Server and DayZ Tools installed.
-
-The included build script creates an unsigned PBO. Before publishing on a server with signature verification enabled, sign it with your own private key using DayZ Tools and distribute the matching public `.bikey` and `.bisign` files.
+The AI creation, loadout, delayed seating, and retry sequence is adapted from Triumph Moving AI Convoy with permission from Triumph. See `THIRD_PARTY_NOTICES.md`.
