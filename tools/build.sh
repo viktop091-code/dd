@@ -16,8 +16,8 @@ cp "$project_root/README.md" "$release_root/README.md"
 (
   cd "$project_root/dist"
   sha256sum '@OpenConvoy/Addons/OpenConvoy.pbo' > SHA256SUMS.txt
-  rm -f OpenConvoy-0.1.0.zip
-  zip -qr OpenConvoy-0.1.0.zip '@OpenConvoy' SHA256SUMS.txt
+  rm -f OpenConvoy-0.1.1.zip
+  zip -qr OpenConvoy-0.1.1.zip '@OpenConvoy' SHA256SUMS.txt
 )
 
 echo "Release created under $project_root/dist"

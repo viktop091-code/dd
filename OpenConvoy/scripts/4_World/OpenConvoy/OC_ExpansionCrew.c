@@ -33,7 +33,9 @@ class OC_ExpansionCrew
 
         for (int seatIndex = 0; seatIndex < requestedCrew; seatIndex++)
         {
-            vector spawnPosition = vehicle.GetPosition() + Vector(0, 0.5, 0);
+            vector spawnPosition;
+            vector entryDirection;
+            vehicle.CrewEntryWS(seatIndex, spawnPosition, entryDirection);
             string characterClass = settings.AICharacterClasses.GetRandomElement();
             eAIBase member = eAIBase.Cast(GetGame().CreateObjectEx(characterClass, spawnPosition, ECE_CREATEPHYSICS | ECE_KEEPHEIGHT | ECE_NOSURFACEALIGN));
             if (!member)
@@ -45,16 +47,7 @@ class OC_ExpansionCrew
             member.SetGroup(m_Group);
             member.eAI_SetUnlimitedReload(1);
             OC_ApplyLoadout(member, settings.AILoadoutItems);
-
-            int animationSeat = DayZPlayerConstants.VEHICLESEAT_CODRIVER;
-            if (seatIndex == 0)
-                animationSeat = DayZPlayerConstants.VEHICLESEAT_DRIVER;
-
-            HumanCommandVehicle vehicleCommand = member.StartCommand_Vehicle(vehicle, seatIndex, animationSeat);
-            if (vehicleCommand)
-                vehicleCommand.SetVehicleType(vehicle.GetAnimInstance());
-            else
-                Error("[OpenConvoy] AI could not enter seat " + seatIndex + ".");
+            member.Notify_Transport(vehicle, seatIndex);
 
             m_Members.Insert(member);
         }
@@ -90,6 +83,10 @@ class OC_ExpansionCrew
     protected void OC_ApplyLoadout(eAIBase member, array<string> items)
     {
         foreach (string itemClass : items)
-            member.GetInventory().CreateInInventory(itemClass);
+        {
+            EntityAI item = member.GetInventory().CreateAttachment(itemClass);
+            if (!item)
+                member.GetInventory().CreateInInventory(itemClass);
+        }
     }
 }

@@ -6,6 +6,8 @@ class OC_ConvoyCar: Hatchback_02
     protected float m_OC_WaypointRadius;
     protected bool m_OC_RouteActive;
     protected bool m_OC_RouteComplete;
+    protected bool m_OC_EngineFailureLogged;
+    protected bool m_OC_DriveStartedLogged;
 
     void OC_ConvoyCar()
     {
@@ -13,6 +15,26 @@ class OC_ConvoyCar: Hatchback_02
         m_OC_WaypointIndex = 1;
         m_OC_TargetSpeedKmh = 30.0;
         m_OC_WaypointRadius = 8.0;
+    }
+
+    void OC_Assemble()
+    {
+        SpawnUniversalParts();
+        FillUpCarFluids();
+
+        GameInventory inventory = GetInventory();
+        for (int wheelIndex = 0; wheelIndex < 4; wheelIndex++)
+            inventory.CreateInInventory("Hatchback_02_Wheel");
+
+        inventory.CreateInInventory("Hatchback_02_Door_1_1");
+        inventory.CreateInInventory("Hatchback_02_Door_1_2");
+        inventory.CreateInInventory("Hatchback_02_Door_2_1");
+        inventory.CreateInInventory("Hatchback_02_Door_2_2");
+        inventory.CreateInInventory("Hatchback_02_Hood");
+        inventory.CreateInInventory("Hatchback_02_Trunk");
+
+        Fill(CarFluid.BRAKE, GetFluidCapacity(CarFluid.BRAKE));
+        Synchronize();
     }
 
     void OC_ConfigureRoute(array<vector> waypoints, float targetSpeedKmh, float waypointRadius)
@@ -54,9 +76,9 @@ class OC_ConvoyCar: Hatchback_02
             OC_Manager.GetInstance().OnVehicleAttacked(this);
     }
 
-    override void EOnPostSimulate(IEntity other, float timeSlice)
+    override void OnInput(float timeSlice)
     {
-        super.EOnPostSimulate(other, timeSlice);
+        super.OnInput(timeSlice);
 
         if (!GetGame().IsServer() || !m_OC_RouteActive)
             return;
@@ -99,7 +121,28 @@ class OC_ConvoyCar: Hatchback_02
         float speed = GetSpeedometerAbsolute();
 
         if (!EngineIsOn())
+        {
+            int operationalState = CheckOperationalRequirements();
+            if (operationalState != ECarOperationalState.OK)
+            {
+                if (!m_OC_EngineFailureLogged)
+                {
+                    Error("[OpenConvoy] Vehicle cannot start; operational state " + operationalState + ".");
+                    m_OC_EngineFailureLogged = true;
+                }
+                SetBrake(1.0);
+                return;
+            }
+
             EngineStart();
+            return;
+        }
+
+        if (!m_OC_DriveStartedLogged)
+        {
+            Print("[OpenConvoy] Autopilot active for " + GetType() + ".");
+            m_OC_DriveStartedLogged = true;
+        }
 
         OC_UpdateGear();
 

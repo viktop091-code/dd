@@ -199,13 +199,10 @@ class OC_Manager
 
     protected void OC_PrepareVehicle(OC_ConvoyCar vehicle, OC_VehicleConfig config)
     {
+        vehicle.OC_Assemble();
+
         foreach (string attachmentClass : config.Attachments)
             vehicle.GetInventory().CreateAttachment(attachmentClass);
-
-        vehicle.Fill(CarFluid.FUEL, 50.0);
-        vehicle.Fill(CarFluid.OIL, 4.0);
-        vehicle.Fill(CarFluid.BRAKE, 1.0);
-        vehicle.Fill(CarFluid.COOLANT, 6.0);
     }
 
     protected void OC_ScheduleRespawn()
