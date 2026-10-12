@@ -1,32 +1,36 @@
 # Wild-Fields
 
-Wild-Fields is a DayZ server mod for configurable moving vehicle convoys with Expansion AI crews.
+Wild-Fields 1.0.0 is a complete DayZ moving convoy event based on the supplied Triumph Moving AI Convoy code, reused with the permission represented by the commissioning user.
 
-## Version 0.1.3
+The mod includes:
 
-- complete convoy vehicles with wheels, doors, battery, radiator, spark plug, and fluids;
-- Expansion AI loadouts through `ExpansionHumanLoadout` (default: `BanditLoadout`);
-- delayed, retried AI seating before the convoy starts moving;
-- automatic removal of an AI unit that cannot enter its assigned seat within 45 seconds;
-- waypoint driving, manual gear changes, cleanup, and respawn;
-- convoy halt and crew dismount after a player attack.
+- working multi-vehicle convoy driving and following;
+- Expansion AI crews with delayed, retried vehicle seating;
+- M1025 and truck presets with assembled parts;
+- seven bundled Chernarus routes;
+- configurable crews, vehicles, routes, loot, timing, notifications, and cleanup;
+- ambush behavior, crew dismounting, corpse handling, and kill-feed controls;
+- route recording, admin menu, optional map markers, and up to three active convoy slots;
+- DayZ 1.30 profile-directory compatibility handling.
 
-The existing settings location remains `$profile:OpenConvoy/settings.json` so servers upgrading from an earlier build keep their routes. Add this field to an existing settings file if it is missing:
+## Requirements
 
-```json
-"AILoadout": "BanditLoadout"
-```
-
-The generated example starts with `Enabled: false`. Verify the route coordinates, set it to `true`, and restart the server.
+- CF;
+- DayZ Expansion Core;
+- DayZ Expansion AI;
+- matching client and server installation of `@Wild-Fields`.
 
 ## Installation
 
-1. Install CF, DayZ Expansion Core, and DayZ Expansion AI on the server and clients.
-2. Copy `@Wild-Fields` to the server and client mod directories.
-3. Add `@Wild-Fields` to the server `-mod` list after the dependencies.
-4. Start the server once, edit `$profile:OpenConvoy/settings.json`, enable the event, and restart.
-5. Check the script log for `[Wild-Fields]` messages.
+1. Remove the earlier prototype PBO and do not load `@OpenConvoy` or the original convoy PBO alongside this adaptation; they use overlapping internal classes.
+2. Copy the complete `@Wild-Fields` directory to the server and clients.
+3. Load `@Wild-Fields` after CF and Expansion dependencies.
+4. Start the server. Defaults are created under `$profile:WildFields/`.
+5. Edit `$profile:WildFields/WildFieldsSettings.json` and the JSON files in `Vehicles`, `Crews`, and `Routes` as needed.
+6. Check the server script log for `[Wild-Fields]` messages.
 
-The included PBO is unsigned. Servers using signature verification must sign it with their own private key and distribute the matching `.bikey` and `.bisign` files.
+The bundled defaults are enabled and schedule the first convoy after 300 seconds. The default routes are for Chernarus; replace them when using another map.
 
-The AI creation, loadout, delayed seating, and retry sequence is adapted from Triumph Moving AI Convoy with permission from Triumph. See `THIRD_PARTY_NOTICES.md`.
+The PBO is unsigned. Servers using signature verification must sign it with their own private key and distribute the matching `.bikey` and `.bisign` files.
+
+See `THIRD_PARTY_NOTICES.md`, plus `LICENSE.txt` and `PERMISSION_NOTICE.txt` inside the source/PBO.

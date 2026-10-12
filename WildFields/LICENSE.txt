@@ -1,0 +1,24 @@
+Triumph Moving AI Convoy - AI convoy event for DayZ
+Copyright (c) 2026 Triumph. All rights reserved.
+
+PERMITTED:
+- Installing and running this mod on any DayZ server (it is loaded with
+  -mod=, and players download it from the Steam Workshop to join).
+- Editing the JSON configuration files it creates in your server profile
+  (AIConvoySettings.json, Vehicles/, Crews/, Routes/).
+
+NOT PERMITTED without prior written permission from the author:
+- Unpacking, repacking, decompiling, modifying or patching the PBO or any
+  of its contents, in whole or in part.
+- Redistributing or re-uploading this mod or derivatives of it, to the
+  Steam Workshop or anywhere else, with or without modifications.
+- Using any part of this mod's code or assets in another mod or product.
+- Monetizing this mod or access to it (see Bohemia Interactive's
+  monetization policy).
+
+The authentic release is signed with the TriumphAIConvoy key. Re-uploads
+of this work are reported under the Steam Workshop rules and applicable
+copyright law (DMCA).
+
+THIS MOD IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. THE AUTHOR IS
+NOT LIABLE FOR ANY DAMAGES ARISING FROM ITS USE.

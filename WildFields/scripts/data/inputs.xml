@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--
+    Wild-Fields keybindings. Referenced from config.cpp (CfgMods > AIConvoy > inputs).
+
+    UAAIConvoyAdminMenu opens the admin menu. It is deliberately left OUT of
+    <preset>, so it ships UNBOUND: an admin assigns their own key under
+    Options > Controls > Wild-Fields. Every player sees the entry in Controls,
+    but pressing it does nothing for anyone who is not in AdminSteamIDs - the
+    server simply never answers, so no menu and no data ever reach them.
+
+    Format copied from a working mod (COT's data/inputs.xml), not from memory.
+-->
+<modded_inputs>
+    <inputs>
+        <actions>
+            <input name="UAAIConvoyAdminMenu" loc="Open Wild-Fields admin menu" />
+        </actions>
+        <sorting name="aiconvoy" loc="Wild-Fields">
+            <input name="UAAIConvoyAdminMenu" />
+        </sorting>
+    </inputs>
+    <preset>
+    </preset>
+</modded_inputs>

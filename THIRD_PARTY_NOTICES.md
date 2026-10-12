@@ -1,5 +1,7 @@
 # Third-party notice
 
-The Expansion AI creation, loadout application, delayed vehicle seating, retry, and timeout sequence in Wild-Fields is adapted from Triumph Moving AI Convoy by Triumph.
+Wild-Fields uses Triumph Moving AI Convoy as its technical base, including its convoy controller, Expansion AI integration, configuration system, routes, loot presets, route recorder, marker support, and admin interface.
 
-The user commissioning this build states that Triumph granted permission to reuse this code. Triumph retains copyright in the original implementation. No Triumph branding, routes, interface assets, or signing keys are included in Wild-Fields.
+The user commissioning this build states that Triumph granted permission to reuse and modify the supplied code. Triumph retains copyright in the original implementation. The original license text is preserved inside the source/PBO as `LICENSE.txt`; `PERMISSION_NOTICE.txt` records the permission represented by the commissioning user.
+
+No Triumph private signing key or signature is included.

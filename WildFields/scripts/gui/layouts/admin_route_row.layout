@@ -1,0 +1,117 @@
+FrameWidgetClass RouteRow {
+ position 0 0
+ size 1 34
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 1
+ {
+  PanelWidgetClass RowBackground {
+   ignorepointer 1
+   color 0.1569 0.1569 0.1569 0.4706
+   position 0 1
+   size 1 32
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   style rover_sim_colorable
+  }
+  CheckBoxWidgetClass RowEnabled {
+   position 6 3
+   size 260 28
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   text ""
+   font "gui/fonts/sdf_MetronBook24"
+  }
+  TextWidgetClass RowName {
+   ignorepointer 1
+   position 40 3
+   size 224 28
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   text ""
+   font "gui/fonts/sdf_MetronBook24"
+   "exact text" 1
+   "exact text size" 18
+   "text valign" center
+  }
+  TextWidgetClass RowInfo {
+   ignorepointer 1
+   color 0.6275 0.6275 0.6275 1
+   position 272 3
+   size 410 28
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   text ""
+   font "gui/fonts/sdf_MetronLight24"
+   "exact text" 1
+   "exact text size" 14
+   "text valign" center
+  }
+  TextWidgetClass RowRunning {
+   visible 0
+   ignorepointer 1
+   color 0.9412 0.6275 0.2353 1
+   position 690 3
+   size 70 28
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   text "RUNNING"
+   font "gui/fonts/sdf_MetronBook24"
+   "exact text" 1
+   "exact text size" 14
+   "text valign" center
+  }
+  ButtonWidgetClass RowTeleport {
+   visible 0
+   color 0.0588 0.0588 0.0588 0.7843
+   position 186 3
+   size 84 28
+   halign right_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   style DayZDefaultButton
+   text "Go to"
+   font "gui/fonts/MetronLight"
+  }
+  ButtonWidgetClass RowStop {
+   visible 0
+   color 0.3922 0.0784 0.0784 0.7843
+   position 96 3
+   size 84 28
+   halign right_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   style DayZDefaultButton
+   text "Stop"
+   font "gui/fonts/MetronLight"
+  }
+  ButtonWidgetClass RowLaunch {
+   color 0.0588 0.0588 0.0588 0.7843
+   position 6 3
+   size 84 28
+   halign right_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   style DayZDefaultButton
+   text "Launch"
+   font "gui/fonts/MetronLight"
+  }
+ }
+}
